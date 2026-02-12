@@ -16,6 +16,9 @@
             <sourceRootList>
                 <sourceRootElem>../src</sourceRootElem>
                 <sourceRootElem>../../../..</sourceRootElem>
+                <sourceRootElem>..\src</sourceRootElem>
+                <sourceRootElem>..\src\default</sourceRootElem>
+                <sourceRootElem>..\src\system_config\default</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
