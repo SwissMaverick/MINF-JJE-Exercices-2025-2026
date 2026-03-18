@@ -57,10 +57,18 @@ void I2C_WriteSEEPROM(void *SrcData, uint32_t EEpromAddr, uint16_t NbBytes)
 // Lecture d'un bloc dans l'EEPROM du MCP79411
 void I2C_ReadSEEPROM(void *DstData, uint32_t EEpromAddr, uint16_t NbBytes)
 {
+   uint8_t *pointeur = (uint8_t*)DstData;
+   
    i2c_start();
+   i2c_write(MCP79411_EEPROM_W);
+   i2c_write(EEpromAddr);
+   i2c_reStart();
    i2c_write(MCP79411_EEPROM_R);
+   *DstData = i2c_read(false);  
    
    i2c_stop();
+   
+   
 } // end I2C_ReadSEEPROM
    
 

@@ -69,7 +69,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
- 
+
 
 void __ISR(_TIMER_1_VECTOR, ipl3AUTO) IntHandlerDrvTmrInstance0(void)
 {
@@ -77,6 +77,8 @@ void __ISR(_TIMER_1_VECTOR, ipl3AUTO) IntHandlerDrvTmrInstance0(void)
     
     static uint16_t firstInit = 0;
     static uint8_t  cycle = 19;
+    
+    DoDebounce();
     
     if(firstInit == 999)
     {

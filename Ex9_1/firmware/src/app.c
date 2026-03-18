@@ -55,6 +55,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "app.h"
 
+#define MAGIC_VALUE 0x12345678
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -169,8 +171,11 @@ void APP_Tasks ( void )
             break;
         }
 
-        /* TODO: implement your application state machine.*/
-        
+        case APP_STATE_WAIT:
+        {
+            // Do nothing
+            break;
+        }
 
         /* The default state should never be executed. */
         default:
