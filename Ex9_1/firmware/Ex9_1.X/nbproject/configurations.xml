@@ -30,6 +30,7 @@
         <itemPath>../src/Mc32Debounce.h</itemPath>
         <itemPath>../src/Mc32_I2cUtilCCS.h</itemPath>
         <itemPath>../src/Mc32gestI2cSeeprom.h</itemPath>
+        <itemPath>../src/GesPec12.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="bsp" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mx_skes" projectFiles="true">
@@ -139,6 +140,7 @@
         <itemPath>../src/Mc32Debounce.c</itemPath>
         <itemPath>../src/Mc32_I2cUtilCCS.c</itemPath>
         <itemPath>../src/Mc32gestI2cSeeprom.c</itemPath>
+        <itemPath>../src/GesPec12.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="bsp" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mx_skes" projectFiles="true">
@@ -183,7 +185,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>1.42</languageToolchainVersion>
+        <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>

@@ -54,6 +54,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "app.h"
+#include "Mc32gestI2cSeeprom.h"
+#include "Mc32_I2cUtilCCS.h"
 
 #define MAGIC_VALUE 0x12345678
 
@@ -167,7 +169,19 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
-        
+            uint8_t valeurEnvoyee;
+            uint8_t valeurRecue;
+            
+            // Test sur pression touche OK
+            
+            //Fréquence +50
+            
+            I2C_WriteSEEPROM(valeurEnvoyee, 0x00, 1);
+                    
+            I2C_ReadSEEPROM(valeurRecue, 0x00, 1);
+            
+            APP_UpdateState(APP_STATE_WAIT);
+            
             break;
         }
 

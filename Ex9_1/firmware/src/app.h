@@ -118,6 +118,18 @@ typedef struct
 
 } APP_DATA;
 
+typedef enum  { SignalSinus, SignalTriangle, SignalDentDeScie, SignalCarre } E_FormesSignal;
+
+// Structure des paramètres du générateur
+typedef struct {
+      E_FormesSignal Forme;
+      int16_t Frequence;
+      int16_t Amplitude;
+      int16_t Offset;
+      uint32_t Magic;
+} S_ParamGen;
+
+
 
 // *****************************************************************************
 // *****************************************************************************

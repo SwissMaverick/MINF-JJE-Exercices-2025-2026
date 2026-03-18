@@ -77,8 +77,9 @@ void __ISR(_TIMER_1_VECTOR, ipl3AUTO) IntHandlerDrvTmrInstance0(void)
     
     static uint16_t firstInit = 0;
     static uint8_t  cycle = 19;
+    uint8_t Val_PB;
     
-    DoDebounce();
+    DoDebounce(&DescrPB, Val_PB);
     
     if(firstInit == 999)
     {
