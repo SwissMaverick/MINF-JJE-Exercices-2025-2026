@@ -36,8 +36,8 @@ SPI_STATES spiState = SPI_STATE_UNINITIALIZED;
 void SPI_Init(void)
 {
     // *** init du périph. SPI ***
+    DRV_SPI0_Initialize();
 
- 
 }
 
 //Ecriture.
@@ -71,7 +71,7 @@ void SPI_StartRead(uint32_t nBytes)
 SPI_STATES SPI_GetState (void)
 {
   
-  
+    return spiState;
 }
 
 //lecture d'un byte dans buffer réception
@@ -85,9 +85,8 @@ uint8_t SPI_ReadByte(void)
 //gestion de la machine d'état du SPI
 void SPI_DoTasks(void)
 {
-    static uint8_t stateSPI = 0;
     
-    switch(stateSPI)
+    switch(spiState)
     {
         case SPI_STATE_UNINITIALIZED :
         {

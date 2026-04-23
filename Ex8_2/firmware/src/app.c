@@ -154,7 +154,8 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
-        
+            SPI_DoTasks();
+            
             break;
         }
 
