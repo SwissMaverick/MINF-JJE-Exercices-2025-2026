@@ -26,8 +26,8 @@
 #define MCP79411_EEPROM_END   0x7F         // addr. fin EEPROM
 
 // Definitions du bus (pour mesures)
-#define I2C-SCK  SCL2/RA2      PORTAbits.RA2   pin 58
-#define I2C-SDA  SDa2/RA3      PORTAbits.RA3   pin 59
+//#define I2C-SCK  SCL2/RA2      PORTAbits.RA2   pin 58
+//#define I2C-SDA  SDa2/RA3      PORTAbits.RA3   pin 59
 
 
 
@@ -44,27 +44,44 @@ void I2C_InitMCP79411(void)
 // Ecriture d'un bloc dans l'EEPROM du MCP79411 
 void I2C_WriteSEEPROM(void *SrcData, uint32_t EEpromAddr, uint16_t NbBytes)
 {
+    bool ack;
     uint8_t *pointeur = (uint8_t*)SrcData;
+    static uint16_t i = 0;
     
-    i2c_start();
-    i2c_write(MCP79411_EEPROM_W);
+    do
+    {
+        i2c_start();
+        ack = i2c_write(MCP79411_EEPROM_W);
+    } while (ack == false);
+
     i2c_write(EEpromAddr);
-    i2c_write(*pointeur);
+
+    for (i = 0; i < NbBytes; i++)
+    {
+        i2c_write(*pointeur);
+        pointeur ++;
+    }
     
     i2c_stop();
+        
 } // end I2C_WriteSEEPROM
 
 // Lecture d'un bloc dans l'EEPROM du MCP79411
 void I2C_ReadSEEPROM(void *DstData, uint32_t EEpromAddr, uint16_t NbBytes)
 {
-   uint8_t *pointeur = (uint8_t*)DstData;
-   
-   i2c_start();
-   i2c_write(MCP79411_EEPROM_W);
-   i2c_write(EEpromAddr);
-   i2c_reStart();
-   i2c_write(MCP79411_EEPROM_R);
-   *pointeur = i2c_read(false); //Pas d'acknowlodge
-   
-   i2c_stop();
+    bool ack;
+    uint8_t *pointeur = (uint8_t*)DstData;
+
+    do
+    {
+        i2c_start();
+        ack = i2c_write(MCP79411_EEPROM_W);
+    } while (ack == false);
+
+    i2c_write(EEpromAddr);
+    i2c_reStart();
+    i2c_write(MCP79411_EEPROM_R);
+    *pointeur = i2c_read(false); //Pas d'acknowlodge
+
+    i2c_stop();
 } // end I2C_ReadSEEPROM

@@ -56,6 +56,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "app.h"
 #include "Mc32gestI2cSeeprom.h"
 #include "Mc32_I2cUtilCCS.h"
+#include "Mc32DriverLcd.h"
 
 #define MAGIC_VALUE 0x12345678
 
@@ -81,6 +82,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 */
 
 APP_DATA appData;
+S_SwitchDescriptor DescrPB;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -138,16 +140,19 @@ void APP_Initialize ( void )
 
 void APP_Tasks ( void )
 {
+    static uint8_t mesValeurs[2];
+    static uint8_t valeurEnvoyee1 = 0;
+    static uint8_t valeurEnvoyee2 = 0;
+    uint8_t valeurRecue = 0;
 
     /* Check the application's current state. */
     switch ( appData.state )
     {
         /* Application's initial state. */
         case APP_STATE_INIT:
-        {
-            bool appInitialized = true;
+        {           
+            DebounceInit(&DescrPB);
             
-            DebounceInit();
             lcd_init();
             lcd_bl_on();
             i2c_init(true);
@@ -157,29 +162,41 @@ void APP_Tasks ( void )
             lcd_gotoxy(1,2);
             printf_lcd("Jean-Elie");
        
-            I2C_ReadSEEPROM();
+            I2C_ReadSEEPROM(&valeurRecue, 0, 1);
         
-            if (appInitialized)
-            {
+            lcd_gotoxy(1,4);
+            printf_lcd("Val env.  : %3d", valeurRecue);
+
+            DRV_TMR0_Start();
             
-                appData.state = APP_STATE_SERVICE_TASKS;
-            }
+            appData.state = APP_STATE_SERVICE_TASKS;
+            
             break;
         }
 
         case APP_STATE_SERVICE_TASKS:
-        {
-            uint8_t valeurEnvoyee;
-            uint8_t valeurRecue;
-            
+        {       
             // Test sur pression touche OK
-            
-            //Fréquence +50
-            
-            I2C_WriteSEEPROM(valeurEnvoyee, 0x00, 1);
+            if (DebounceIsPressed(&DescrPB))
+            {
+                DebounceClearPressed(&DescrPB);
+                
+                //Fréquence +50
+                valeurEnvoyee1 += 50;
+                valeurEnvoyee2 += 10;
+                
+                mesValeurs[0] = valeurEnvoyee1;
+                mesValeurs[1] = valeurEnvoyee2;
+                           
+                I2C_WriteSEEPROM(&mesValeurs, 0, 2);
                     
-            I2C_ReadSEEPROM(valeurRecue, 0x00, 1);
-            
+                I2C_ReadSEEPROM(&valeurRecue, 0, 1);
+                
+                lcd_gotoxy(1,3);
+                printf_lcd("Val recue : %3d", valeurRecue);
+                lcd_gotoxy(1,4);
+                printf_lcd("Val env.  : %s", mesValeurs);                
+            }
             APP_UpdateState(APP_STATE_WAIT);
             
             break;

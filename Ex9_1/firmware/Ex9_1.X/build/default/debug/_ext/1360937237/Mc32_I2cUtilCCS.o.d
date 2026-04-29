@@ -143,7 +143,7 @@ build/default/debug/_ext/1360937237/Mc32_I2cUtilCCS.o: \
  ../../../../../../framework/driver/tmr/drv_tmr_compatibility.h \
  ../../../../../../framework/system/ports/sys_ports.h \
  ../../../../../../framework/system/ports/sys_ports_definitions.h \
- ../src/app.h ../src/Mc32_I2cUtilCCS.h \
+ ../src/app.h ../src/Mc32Debounce.h ../src/Mc32_I2cUtilCCS.h \
  ../../../../../../framework/peripheral\i2c\plib_i2c.h \
  ../../../../../../framework/peripheral/i2c/plib_i2c_helper_macros.h \
  ../../../../../../framework/peripheral/i2c/processor/i2c_processor.h \
@@ -483,6 +483,8 @@ build/default/debug/_ext/1360937237/Mc32_I2cUtilCCS.o: \
 ../../../../../../framework/system/ports/sys_ports_definitions.h:
 
 ../src/app.h:
+
+../src/Mc32Debounce.h:
 
 ../src/Mc32_I2cUtilCCS.h:
 
