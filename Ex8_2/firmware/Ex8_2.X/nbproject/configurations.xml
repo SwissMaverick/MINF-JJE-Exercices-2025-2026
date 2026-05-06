@@ -37,6 +37,9 @@
         </logicalFolder>
         <itemPath>../src/app.h</itemPath>
         <itemPath>../src/Mc32Ex8_2_spi_sm.h</itemPath>
+        <itemPath>../src/Mc32SpiUtil.h</itemPath>
+        <itemPath>../src/Mc32gestSpiDac.h</itemPath>
+        <itemPath>../src/Mc32gestSpiLM70.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="bsp" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mx_skes" projectFiles="true">
@@ -170,6 +173,9 @@
         <itemPath>../src/app.c</itemPath>
         <itemPath>../src/main.c</itemPath>
         <itemPath>../src/Mc32Ex8_2_spi_sm.c</itemPath>
+        <itemPath>../src/Mc32SpiUtil.c</itemPath>
+        <itemPath>../src/Mc32gestSPiDac.c</itemPath>
+        <itemPath>../src/Mc32gestSPiLM70.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="bsp" projectFiles="true">
         <logicalFolder name="f1" displayName="pic32mx_skes" projectFiles="true">
@@ -214,7 +220,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>1.42</languageToolchainVersion>
+        <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>

@@ -143,6 +143,7 @@ void APP_Tasks ( void )
         {
             bool appInitialized = true;
        
+            SPI_Init();
         
             if (appInitialized)
             {
