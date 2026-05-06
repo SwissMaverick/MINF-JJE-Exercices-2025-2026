@@ -54,7 +54,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "app.h"
-
+#include "Mc32Ex8_2_spi_sm.h"
+#include "Mc32DriverLcd.h"
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -134,6 +135,10 @@ void APP_Initialize ( void )
 
 void APP_Tasks ( void )
 {
+    int16_t rawTemp;
+    uint8_t MSB = 0;
+    uint8_t LSB;
+    float temp;
 
     /* Check the application's current state. */
     switch ( appData.state )
@@ -141,27 +146,50 @@ void APP_Tasks ( void )
         /* Application's initial state. */
         case APP_STATE_INIT:
         {
-            bool appInitialized = true;
-       
-            SPI_Init();
-        
-            if (appInitialized)
-            {
+            //SPI_InitLM70();
+            lcd_init();
+            lcd_bl_on();
+            SPI_DoTasks();
+            DRV_TMR0_Start();
             
-                appData.state = APP_STATE_SERVICE_TASKS;
-            }
+            appData.state = APP_STATE_SERVICE_TASKS;
+
             break;
         }
 
+        case APP_STATE_WAIT:
+        {
+            
+            break;
+        }
+        
         case APP_STATE_SERVICE_TASKS:
         {
+            BSP_LEDToggle(BSP_LED_2); 
             SPI_DoTasks();
+            if(SPI_GetState() == SPI_STATE_IDLE)
+            {
+                SPI_StartRead(2);
+            }
             
+            if(SPI_GetState() == SPI_STATE_IDLE_READ_DATA_AVAILABLE)
+            {
+                MSB = SPI_ReadByte();
+
+                LSB = SPI_ReadByte();
+
+                rawTemp = MSB;
+                rawTemp = rawTemp << 8;
+                rawTemp = rawTemp | LSB;
+
+                LM70_ConvRawToDeg2(rawTemp, &temp);
+                lcd_gotoxy(1,2);
+                printf_lcd("Temp = %f", temp);
+            }
+            appData.state = APP_STATE_WAIT;
             break;
         }
 
-        /* TODO: implement your application state machine.*/
-        
 
         /* The default state should never be executed. */
         default:
