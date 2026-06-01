@@ -143,10 +143,8 @@ build/default/debug/_ext/1360937237/Mc32gestSPiLM70.o: \
  ../../../../../../framework/driver/tmr/drv_tmr_compatibility.h \
  ../../../../../../framework/system/ports/sys_ports.h \
  ../../../../../../framework/system/ports/sys_ports_definitions.h \
- ../src/system_config/default/framework/driver/spi/static/drv_spi_static.h \
- ../../../../../../framework/driver/spi/drv_spi.h \
- ../../../../../../framework/driver/spi/drv_spi_definitions.h \
- ../../../../../../framework/peripheral/spi/plib_spi.h \
+ ../src/app.h ../src/Mc32gestSpiLM70.h ../src/Mc32SpiUtil.h \
+ ../../../../../../framework/peripheral\SPI\plib_spi.h \
  ../../../../../../framework/peripheral/spi/processor/spi_processor.h \
  ../../../../../../framework/peripheral/spi/processor/spi_p32xxxx.h \
  ../../../../../../framework/peripheral/spi/processor/spi_p32mx795f512l.h \
@@ -189,9 +187,7 @@ build/default/debug/_ext/1360937237/Mc32gestSPiLM70.o: \
  ../../../../../../framework/peripheral/spi/processor/../templates/spi_AudioTransmitMode_Unsupported.h \
  ../../../../../../framework/peripheral/spi/processor/../templates/spi_AudioProtocolMode_Unsupported.h \
  ../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer32bit_Default.h \
- ../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer16bit_Default.h \
- ../src/app.h ../src/Mc32gestSpiLM70.h ../src/Mc32SpiUtil.h \
- ../../../../../../framework/peripheral\SPI\plib_spi.h
+ ../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer16bit_Default.h
 
 ../src/app.h:
 
@@ -481,13 +477,13 @@ build/default/debug/_ext/1360937237/Mc32gestSPiLM70.o: \
 
 ../../../../../../framework/system/ports/sys_ports_definitions.h:
 
-../src/system_config/default/framework/driver/spi/static/drv_spi_static.h:
+../src/app.h:
 
-../../../../../../framework/driver/spi/drv_spi.h:
+../src/Mc32gestSpiLM70.h:
 
-../../../../../../framework/driver/spi/drv_spi_definitions.h:
+../src/Mc32SpiUtil.h:
 
-../../../../../../framework/peripheral/spi/plib_spi.h:
+../../../../../../framework/peripheral\SPI\plib_spi.h:
 
 ../../../../../../framework/peripheral/spi/processor/spi_processor.h:
 
@@ -574,11 +570,3 @@ build/default/debug/_ext/1360937237/Mc32gestSPiLM70.o: \
 ../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer32bit_Default.h:
 
 ../../../../../../framework/peripheral/spi/processor/../templates/spi_Buffer16bit_Default.h:
-
-../src/app.h:
-
-../src/Mc32gestSpiLM70.h:
-
-../src/Mc32SpiUtil.h:
-
-../../../../../../framework/peripheral\SPI\plib_spi.h:

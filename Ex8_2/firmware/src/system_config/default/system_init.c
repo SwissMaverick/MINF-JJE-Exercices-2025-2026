@@ -99,9 +99,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: Driver Initialization Data
 // *****************************************************************************
 // *****************************************************************************
-// <editor-fold defaultstate="collapsed" desc="DRV_SPI Initialization Data"> 
- /*** SPI Driver Initialization Data ***/
-// </editor-fold>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -153,10 +150,6 @@ void SYS_Initialize ( void* data )
     BSP_Initialize();        
 
     /* Initialize Drivers */
-
-    /*** SPI Driver Index 0 initialization***/
-
-    sysObj.spiObjectIdx0 = DRV_SPI_Initialize(DRV_SPI_INDEX_0, (const SYS_MODULE_INIT  * const)NULL);
     /*Initialize TMR0 */
     DRV_TMR0_Initialize();
  

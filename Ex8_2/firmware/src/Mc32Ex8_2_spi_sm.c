@@ -28,9 +28,10 @@
 #include "Mc32SpiUtil.h"
 #include "Mc32DriverLcd.h"
 
+
 //byte bidon pour envoi lorsqu'uniquement une lecture est demandée
 //le spi étant full-duplex, une lecture implique forcément une écriture simultanée
-#define DUMMY_BYTE  0x81    
+#define DUMMY_BYTE  0x81
 
 SPI_STATES spiState = SPI_STATE_UNINITIALIZED;
 APP_DATA appData;
@@ -99,7 +100,6 @@ void SPI_StartRead(uint32_t nBytes)
     }
     
     spiState = SPI_STATE_BUSY_READ;
-
 }
 
 //pour obtenir l'état interne de la SM spi
@@ -111,14 +111,13 @@ SPI_STATES SPI_GetState (void)
 //lecture d'un byte dans buffer réception
 uint8_t SPI_ReadByte(void)
 {
-    return PLIB_SPI_BufferRead(SPI_ID_1);
+   return PLIB_SPI_BufferRead(SPI_ID_1);
 }
 
 //fonction à appeler périodiquement pour gestion SPI
 //gestion de la machine d'état du SPI
 void SPI_DoTasks(void)
 {
-
     switch(spiState)
     {
         case SPI_STATE_UNINITIALIZED:
@@ -159,10 +158,10 @@ void SPI_DoTasks(void)
             }
             
             break;
+            
         default:
             break;
     }
- 
 }
 
 void LM70_ConvRawToDeg2( int16_t RowTemp, float *PTemp)

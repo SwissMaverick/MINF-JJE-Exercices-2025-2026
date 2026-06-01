@@ -26,8 +26,6 @@ int16_t SPI_ReadRawTempLM70(void);
 // Nouveau avec reconfiguration
 int16_t SPI_CfgReadRawTempLM70(void);
 
-void SPI_ConfigureLM70(void);
-
 void LM70_ConvRawToDeg( int16_t RowTemp, float *PTemp);
 
 #endif

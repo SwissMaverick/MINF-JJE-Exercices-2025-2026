@@ -129,26 +129,6 @@ extern "C" {
 // Section: Driver Configuration
 // *****************************************************************************
 // *****************************************************************************
-
-/*** SPI Driver Configuration ***/
-#define DRV_SPI_NUMBER_OF_MODULES		4
-/*** Driver Compilation and static configuration options. ***/
-/*** Select SPI compilation units.***/
-#define DRV_SPI_POLLED 				1
-#define DRV_SPI_ISR 				0
-#define DRV_SPI_MASTER 				1
-#define DRV_SPI_SLAVE 				0
-#define DRV_SPI_RM 					0
-#define DRV_SPI_EBM 				1
-#define DRV_SPI_8BIT 				1
-#define DRV_SPI_16BIT 				0
-#define DRV_SPI_32BIT 				0
-#define DRV_SPI_DMA 				0
-
-/*** SPI Driver Static Allocation Options ***/
-#define DRV_SPI_INSTANCES_NUMBER 		1
-#define DRV_SPI_CLIENTS_NUMBER 			1
-#define DRV_SPI_ELEMENTS_PER_QUEUE 		10
 /*** Timer Driver Configuration ***/
 #define DRV_TMR_INTERRUPT_MODE             true
 
@@ -160,7 +140,7 @@ extern "C" {
 #define DRV_TMR_INTERRUPT_PRIORITY_IDX0     INT_PRIORITY_LEVEL1
 #define DRV_TMR_INTERRUPT_SUB_PRIORITY_IDX0 INT_SUBPRIORITY_LEVEL0
 #define DRV_TMR_CLOCK_SOURCE_IDX0           DRV_TMR_CLKSOURCE_INTERNAL
-#define DRV_TMR_PRESCALE_IDX0               TMR_PRESCALE_VALUE_64
+#define DRV_TMR_PRESCALE_IDX0               TMR_PRESCALE_VALUE_8
 #define DRV_TMR_OPERATION_MODE_IDX0         DRV_TMR_OPERATION_MODE_16_BIT
 #define DRV_TMR_ASYNC_WRITE_ENABLE_IDX0     false
 #define DRV_TMR_POWER_STATE_IDX0            

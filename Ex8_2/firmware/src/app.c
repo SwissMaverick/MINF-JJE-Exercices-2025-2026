@@ -56,6 +56,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "app.h"
 #include "Mc32Ex8_2_spi_sm.h"
 #include "Mc32DriverLcd.h"
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -153,16 +154,10 @@ void APP_Tasks ( void )
             DRV_TMR0_Start();
             
             appData.state = APP_STATE_SERVICE_TASKS;
-
-            break;
-        }
-
-        case APP_STATE_WAIT:
-        {
             
             break;
         }
-        
+
         case APP_STATE_SERVICE_TASKS:
         {
             BSP_LEDToggle(BSP_LED_2); 
@@ -187,9 +182,12 @@ void APP_Tasks ( void )
                 printf_lcd("Temp = %f", temp);
             }
             appData.state = APP_STATE_WAIT;
+            
             break;
         }
 
+        /* TODO: implement your application state machine.*/
+        
 
         /* The default state should never be executed. */
         default:
