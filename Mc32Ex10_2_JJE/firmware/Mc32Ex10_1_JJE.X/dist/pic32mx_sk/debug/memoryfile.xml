@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<project>                                  
+  <executable name="dist/pic32mx_sk/debug/Mc32Ex10_1_JJE.X.debug.elf">                 
+    <memory name="program">                 
+      <units>bytes</units>                 
+      <length>531968</length>                 
+      <used>35080</used>                     
+      <free>496888</free>                     
+    </memory>                              
+    <memory name="data">              
+      <units>bytes</units>                 
+      <length>131584</length>                 
+      <used>31556</used>                     
+      <free>100028</free>                     
+    </memory>                              
+  </executable>                            
+</project>                                 
