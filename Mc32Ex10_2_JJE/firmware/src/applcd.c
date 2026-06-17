@@ -54,6 +54,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "applcd.h"
+#include "FreeRTOS.h"
+#include "queue.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -76,6 +78,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Application strings and buffers are be defined outside this structure.
 */
 
+extern QueueHandle_t queueLcd;
 APPLCD_DATA applcdData;
 
 // *****************************************************************************
@@ -134,37 +137,34 @@ void APPLCD_Initialize ( void )
 
 void APPLCD_Tasks ( void )
 {
+    char car;
 
-    /* Check the application's current state. */
     switch ( applcdData.state )
     {
-        /* Application's initial state. */
         case APPLCD_STATE_INIT:
         {
-            bool appInitialized = true;
-       
-        
-            if (appInitialized)
-            {
-            
-                applcdData.state = APPLCD_STATE_SERVICE_TASKS;
-            }
+            // Lignes 1 et 2 utilisées pour l'invite
+            // Note : Remplacez ces appels par la bibliothèque LCD de votre projet
+            // lcd_put_string(1, "Ex_10_2 FreeRTOS"); 
+            // lcd_put_string(2, "Nom");
+
+            applcdData.state = APPLCD_STATE_SERVICE_TASKS;
             break;
         }
 
         case APPLCD_STATE_SERVICE_TASKS:
         {
-        
+            // Affiche le caractère dès qu'il est disponible dans la queue
+            if (xQueueReceive(queueLcd, &car, portMAX_DELAY) == pdTRUE)
+            {
+                // La ligne 4 affiche la touche appuyée
+                // lcd_put_char(4, 0, car);
+            }
             break;
         }
 
-        /* TODO: implement your application state machine.*/
-        
-
-        /* The default state should never be executed. */
         default:
         {
-            /* TODO: Handle error in application's state machine. */
             break;
         }
     }

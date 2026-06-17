@@ -54,6 +54,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "appclav.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "Mc32Debounce.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -96,7 +100,12 @@ APPCLAV_DATA appclavData;
 
 /* TODO:  Add any necessary local functions.
 */
+extern QueueHandle_t queueLcd;
+extern QueueHandle_t queueTx;
 
+APPCLAV_DATA appclavData;
+
+S_SwitchDescriptor switches[4];
 
 // *****************************************************************************
 // *****************************************************************************
@@ -134,6 +143,8 @@ void APPCLAV_Initialize ( void )
 
 void APPCLAV_Tasks ( void )
 {
+    static TickType_t xLastWakeTime;
+    const TickType_t xFrequency = pdMS_TO_TICKS(1);
 
     /* Check the application's current state. */
     switch ( appclavData.state )
@@ -141,20 +152,53 @@ void APPCLAV_Tasks ( void )
         /* Application's initial state. */
         case APPCLAV_STATE_INIT:
         {
-            bool appInitialized = true;
-       
-        
-            if (appInitialized)
-            {
+            xLastWakeTime = xTaskGetTickCount();
             
-                appclavData.state = APPCLAV_STATE_SERVICE_TASKS;
+            for (int i = 0; i < 4; i++) 
+            {
+                DebounceInit(&switches[i]);
             }
+            
             break;
         }
 
         case APPCLAV_STATE_SERVICE_TASKS:
         {
-        
+            // Tâche réveillée précisément toutes les 1 ms
+            vTaskDelayUntil(&xLastWakeTime, xFrequency);
+            
+            // Lecture de l'état matériel des 4 boutons
+            // NOTE : La librairie suppose que "0 indique une touche pressée".
+            // Adaptez 'BSP_SwitchStateGet' selon les macros exactes de votre carte.
+            bool raw_inputs[4];
+            raw_inputs[0] = (BSP_SwitchStateGet(BSP_SWITCH_6) != BSP_SWITCH_STATE_PRESSED);
+            raw_inputs[1] = (BSP_SwitchStateGet(BSP_SWITCH_7) != BSP_SWITCH_STATE_PRESSED);
+            raw_inputs[2] = (BSP_SwitchStateGet(BSP_SWITCH_8) != BSP_SWITCH_STATE_PRESSED);
+            raw_inputs[3] = (BSP_SwitchStateGet(BSP_SWITCH_9) != BSP_SWITCH_STATE_PRESSED);
+
+            // Traitement anti-rebond pour chaque bouton
+            for (int i = 0; i < 4; i++) 
+            {
+                // Mise à jour de l'état du switch
+                DoDebounce(&switches[i], raw_inputs[i]);
+                
+                // Si la touche vient d'être pressée (front descendant géré par la lib)
+                if (DebounceIsPressed(&switches[i]))
+                {
+                    // Le code de la touche est '1', '2', '3' ou '4'
+                    char car = '1' + i; 
+                    
+                    // Envoi du caractère dans la queue LCD et la queue série
+                    xQueueSend(queueLcd, &car, 0);
+                    xQueueSend(queueTx, &car, 0);
+                    
+                    // Acquittement de l'événement pour ne pas le renvoyer en boucle
+                    DebounceClearPressed(&switches[i]);
+                }
+            }
+            
+            
+            
             break;
         }
 

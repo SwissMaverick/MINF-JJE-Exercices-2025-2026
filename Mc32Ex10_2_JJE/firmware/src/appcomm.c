@@ -54,6 +54,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 
 #include "appcomm.h"
+#include "queue.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -76,6 +77,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Application strings and buffers are be defined outside this structure.
 */
 
+extern QueueHandle_t queueTx;
 APPCOMM_DATA appcommData;
 
 // *****************************************************************************
@@ -134,37 +136,30 @@ void APPCOMM_Initialize ( void )
 
 void APPCOMM_Tasks ( void )
 {
+    char car;
 
-    /* Check the application's current state. */
-    switch ( appcommData.state )
+    switch (appcommData.state)
     {
-        /* Application's initial state. */
         case APPCOMM_STATE_INIT:
         {
-            bool appInitialized = true;
-       
+            appcommData.state = APPCOMM_STATE_SERVICE_TASKS;
+            break;
+        }
         
-            if (appInitialized)
+        case APPCOMM_STATE_SERVICE_TASKS:
+        {
+            // Extrait de votre code : attente bloquante sur la queue
+            if(xQueueReceive(queueTx, &car, portMAX_DELAY))
             {
-            
-                appcommData.state = APPCOMM_STATE_SERVICE_TASKS;
+                // Envoie le caractère via UART
+                // Note : Adaptez avec la fonction UART générée par Harmony (ex: DRV_USART_WriteByte)
+                // DRV_USART_WriteByte(sysObj.drvUsart0, car); 
             }
             break;
         }
-
-        case APPCOMM_STATE_SERVICE_TASKS:
-        {
         
-            break;
-        }
-
-        /* TODO: implement your application state machine.*/
-        
-
-        /* The default state should never be executed. */
         default:
         {
-            /* TODO: Handle error in application's state machine. */
             break;
         }
     }
